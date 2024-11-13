@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+</head>
+<body>
+
+  <div class="register-container">
+    <h2>Register</h2>
+    <form id="registerForm">
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" required>
+      </div>
+      <button type="submit">Register</button>
+    </form>
+    <p id="error-message" style="color: red;"></p>
+  </div>
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAtIUAIVb5Bh8_nkVpQWVGbu39NH3kXx_8",
+      authDomain: "testingayam-e4dda.firebaseapp.com",
+      projectId: "testingayam-e4dda",
+      storageBucket: "testingayam-e4dda.appspot.com",
+      messagingSenderId: "912189223343",
+      appId: "1:912189223343:web:4b53d11d7a98a1e1fbff5a",
+      measurementId: "G-Q9V35SM9L7"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth(app);
+
+    // Handle form submission
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed in 
+          const user = userCredential.user;
+          alert("User registered successfully: " + user.email);
+        })
+        .catch((error) => {
+          const errorMessage = error.message;
+          document.getElementById('error-message').textContent = errorMessage;
+        });
+    });
+  </script>
+</body>
+</html>
